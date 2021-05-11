@@ -34,6 +34,8 @@ namespace incidencna_matica
             this.buttonPocetUzlov = new System.Windows.Forms.Button();
             this.labelPocetUzlov = new System.Windows.Forms.Label();
             this.numericUpDownPocetUzlov = new System.Windows.Forms.NumericUpDown();
+            this.buttonLoadTestingData = new System.Windows.Forms.Button();
+            this.buttonVypocitaj = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMatica)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPocetUzlov)).BeginInit();
             this.SuspendLayout();
@@ -65,6 +67,7 @@ namespace incidencna_matica
             this.dataGridViewMatica.RowHeadersVisible = false;
             this.dataGridViewMatica.Size = new System.Drawing.Size(951, 508);
             this.dataGridViewMatica.TabIndex = 0;
+            this.dataGridViewMatica.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMatica_CellValueChanged);
             // 
             // buttonPocetUzlov
             // 
@@ -107,11 +110,33 @@ namespace incidencna_matica
             0,
             0});
             // 
+            // buttonLoadTestingData
+            // 
+            this.buttonLoadTestingData.Location = new System.Drawing.Point(777, 12);
+            this.buttonLoadTestingData.Name = "buttonLoadTestingData";
+            this.buttonLoadTestingData.Size = new System.Drawing.Size(195, 23);
+            this.buttonLoadTestingData.TabIndex = 4;
+            this.buttonLoadTestingData.Text = "Testovacie data";
+            this.buttonLoadTestingData.UseVisualStyleBackColor = true;
+            this.buttonLoadTestingData.Click += new System.EventHandler(this.buttonLoadTestingData_Click);
+            // 
+            // buttonVypocitaj
+            // 
+            this.buttonVypocitaj.Location = new System.Drawing.Point(297, 12);
+            this.buttonVypocitaj.Name = "buttonVypocitaj";
+            this.buttonVypocitaj.Size = new System.Drawing.Size(75, 23);
+            this.buttonVypocitaj.TabIndex = 5;
+            this.buttonVypocitaj.Text = "Vypočítaj";
+            this.buttonVypocitaj.UseVisualStyleBackColor = true;
+            this.buttonVypocitaj.Click += new System.EventHandler(this.buttonVypocitaj_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 561);
+            this.Controls.Add(this.buttonVypocitaj);
+            this.Controls.Add(this.buttonLoadTestingData);
             this.Controls.Add(this.numericUpDownPocetUzlov);
             this.Controls.Add(this.labelPocetUzlov);
             this.Controls.Add(this.buttonPocetUzlov);
@@ -132,6 +157,8 @@ namespace incidencna_matica
         private System.Windows.Forms.Button buttonPocetUzlov;
         private System.Windows.Forms.Label labelPocetUzlov;
         private System.Windows.Forms.NumericUpDown numericUpDownPocetUzlov;
+        private System.Windows.Forms.Button buttonLoadTestingData;
+        private System.Windows.Forms.Button buttonVypocitaj;
     }
 }
 
