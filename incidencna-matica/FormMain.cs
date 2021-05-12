@@ -39,9 +39,9 @@ namespace incidencna_matica
 
         }
 
-
-
         #endregion
+
+        #region Vykreslenie prostredia 
 
         private void DesignTable(int pocet_uzlov)
         {
@@ -70,39 +70,32 @@ namespace incidencna_matica
                 column.Width = 30;
             }
 
-            //foreach (DataGridViewRow row in dataGridViewMatica.Rows)
-            //{
-            //    foreach (DataGridViewCell cell in row.Cells)
-            //    {
-            //    }
-            //}
-
-
-            //foreach (DataGridViewColumn row in dataGridViewMatica.Rows)
-            //{
-            //    if (row.Index != 0)
-            //    {
-            //        row.Width = 30;
-            //    }
-            //}
         }
 
         private void VyplnZakladneHodnoty(int pocet_uzlov)
         {
-            dataGridViewMatica[0, 0].Value = "Uz";
+            dataGridViewMatica[0, 0].Value = "i | j";
+            dataGridViewMatica[0, 0].Style.BackColor = Color.MintCream;
             for (int i = 0; i < pocet_uzlov; i++)
             {
-                dataGridViewMatica[0, i+1].Value = i.ToString();
+                dataGridViewMatica[0, i + 1].Value = i.ToString(); //MintCream
                 dataGridViewMatica[i + 1, 0].Value = i.ToString();
                 dataGridViewMatica[i + 1, i + 1].Value = "X";
+                
+                dataGridViewMatica[0, i + 1].Style.BackColor = Color.MintCream;
+                dataGridViewMatica[i + 1, 0].Style.BackColor = Color.MintCream;
+                dataGridViewMatica[i + 1, i + 1].Style.BackColor = Color.MintCream;
             }
             dataGridViewMatica[0, pocet_uzlov + 1].Value = "TM";
             dataGridViewMatica[pocet_uzlov + 1, 0].Value = "TP";
             dataGridViewMatica[pocet_uzlov + 1, pocet_uzlov + 1].Value = "X";
+
+            dataGridViewMatica[0, pocet_uzlov + 1].Style.BackColor = Color.MintCream;
+            dataGridViewMatica[pocet_uzlov + 1, 0].Style.BackColor = Color.MintCream;
+            dataGridViewMatica[pocet_uzlov + 1, pocet_uzlov + 1].Style.BackColor = Color.MintCream;
+
+            textBoxUzlyNaKritickejCeste.Text = "";
         }
-
-
-
 
         private void buttonPocetUzlovClick()
         {
@@ -116,88 +109,21 @@ namespace incidencna_matica
             VyplnZakladneHodnoty(pocet_uzlov);
         }
 
+        #endregion
+
+
+        #region Vypocet
+
+
         struct MaxIndexValue
         {
             public int index;
             public int value;
         }
 
-        private MaxIndexValue MaxInColumn_index(int columnIndex)
-        {
-            int pocet_uzlov = int.Parse(numericUpDownPocetUzlov.Value.ToString());
-            int cellValue = 0;
-            int maxIndex = 0;
-            int maxValue = 0;
-            for (int i = 1; i <= pocet_uzlov; i++)
-            {
-                if (dataGridViewMatica[columnIndex, i].Value != null) {
-                    if (int.TryParse(dataGridViewMatica[columnIndex, i].Value.ToString(), out cellValue))
-                    {
-                        int tmValue = int.Parse(dataGridViewMatica[i, pocet_uzlov + 1].Value.ToString());
-                        
-
-
-                        if (cellValue + tmValue > maxValue)
-                        {
-                            maxValue = cellValue + tmValue;
-                            maxIndex = i;
-
-
-                        }
-                    }
-                }
-            }
-
-
-
-            MaxIndexValue maxIndexValue = new MaxIndexValue
-            {
-                index = maxIndex,
-                value = maxValue
-            };
-
-            return maxIndexValue;
-        }
-
-        private MaxIndexValue MaxInRow_index(int rowIndex)
-        {
-            int pocet_uzlov = int.Parse(numericUpDownPocetUzlov.Value.ToString());
-            int cellValue = 0;
-            int maxIndex = 0;
-            int maxValue = 0;
-            for (int i = 1; i <= pocet_uzlov; i++)
-            {
-                if (dataGridViewMatica[i, rowIndex].Value != null)
-                {
-                    if (int.TryParse(dataGridViewMatica[i, rowIndex].Value.ToString(), out cellValue))
-                    {
-                        int tpValue = int.Parse(dataGridViewMatica[pocet_uzlov + 1, i].Value.ToString());
-
-
-
-                        if (cellValue - tpValue > maxValue)
-                        {
-                            maxValue = cellValue - tpValue;
-                            maxIndex = i;
-
-
-                        }
-                    }
-                }
-            }
-
-
-
-            MaxIndexValue maxIndexValue = new MaxIndexValue
-            {
-                index = maxIndex,
-                value = maxValue
-            };
-
-            return maxIndexValue;
-        }
-
-
+        /// <summary>
+        /// Vypocet TM
+        /// </summary>
         private void vypocetTM()
         {
             int pocet_uzlov = int.Parse(numericUpDownPocetUzlov.Value.ToString());
@@ -212,11 +138,47 @@ namespace incidencna_matica
                 dataGridViewMatica[i, pocet_uzlov + 1].Value = maxIndexValue.value;
             }
 
-
-
         }
 
+        /// <summary>
+        /// Zistenie maximalneho suctu
+        /// </summary>
+        /// <param name="columnIndex"></param>
+        /// <returns></returns>
+        private MaxIndexValue MaxInColumn_index(int columnIndex)
+        {
+            int pocet_uzlov = int.Parse(numericUpDownPocetUzlov.Value.ToString());
+            int cellValue = 0;
+            int maxIndex = 0;
+            int maxValue = 0;
+            for (int i = 1; i <= pocet_uzlov; i++)
+            {
+                if (dataGridViewMatica[columnIndex, i].Value != null) {
+                    if (int.TryParse(dataGridViewMatica[columnIndex, i].Value.ToString(), out cellValue))
+                    {
+                        int tmValue = int.Parse(dataGridViewMatica[i, pocet_uzlov + 1].Value.ToString());
 
+                        if (cellValue + tmValue > maxValue)
+                        {
+                            maxValue = cellValue + tmValue;
+                            maxIndex = i;
+
+
+                        }
+                    }
+                }
+            }
+
+            return new MaxIndexValue
+            {
+                index = maxIndex,
+                value = maxValue
+            };
+        }
+
+        /// <summary>
+        /// Vypocet TP
+        /// </summary>
         private void vypocetTP()
         {
             int pocet_uzlov = int.Parse(numericUpDownPocetUzlov.Value.ToString());
@@ -224,7 +186,7 @@ namespace incidencna_matica
             dataGridViewMatica[pocet_uzlov + 1, pocet_uzlov].Value = dataGridViewMatica[pocet_uzlov, pocet_uzlov + 1].Value;
             dataGridViewMatica[pocet_uzlov + 1, pocet_uzlov - 1].Value = dataGridViewMatica[pocet_uzlov, pocet_uzlov + 1].Value;
 
-            for (int i = pocet_uzlov-1 ; i >= 1; i--)
+            for (int i = pocet_uzlov - 1; i >= 1; i--)
             {
                 MaxIndexValue maxIndexValue = MaxInRow_index(i);
 
@@ -233,6 +195,97 @@ namespace incidencna_matica
             }
         }
 
+        /// <summary>
+        /// Zistenie minimalneho rozdielu
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <returns></returns>
+        private MaxIndexValue MaxInRow_index(int rowIndex)
+        {
+            int pocet_uzlov = int.Parse(numericUpDownPocetUzlov.Value.ToString());
+            int cellValue = 0;
+            int minIndex = 0;
+            int minValue = 999999999;
+            for (int i = 1; i <= pocet_uzlov; i++)
+            {
+                if (dataGridViewMatica[i, rowIndex].Value != null)
+                {
+                    if (int.TryParse(dataGridViewMatica[i, rowIndex].Value.ToString(), out cellValue))
+                    {
+                        int tpValue = int.Parse(dataGridViewMatica[pocet_uzlov + 1, i].Value.ToString());
+
+
+
+                        if (tpValue - cellValue < minValue)
+                        {
+                            minValue = tpValue - cellValue;
+                            minIndex = i;
+
+
+                        }
+                    }
+                }
+            }
+
+            return new MaxIndexValue
+            {
+                index = minIndex,
+                value = minValue
+            };
+        }
+
+ 
+        /// <summary>
+        /// Zistenie a vyznacenie kritickej cesty
+        /// </summary>
+        private void vyznacenieKritickejCesty()
+        {
+            int pocet_uzlov = int.Parse(numericUpDownPocetUzlov.Value.ToString());
+
+            for (int i = 1;i <= pocet_uzlov; i++)
+            {
+                if (dataGridViewMatica[i, pocet_uzlov + 1].Value.ToString()  == dataGridViewMatica[pocet_uzlov + 1, i].Value.ToString())
+                {
+                    //dataGridViewMatica[i, pocet_uzlov + 1].Style.BackColor = Color.CornflowerBlue;
+                    //dataGridViewMatica[pocet_uzlov + 1, i].Style.BackColor = Color.CornflowerBlue;
+                    dataGridViewMatica[i, pocet_uzlov + 1].Style.ForeColor = Color.Red;
+                    dataGridViewMatica[pocet_uzlov + 1, i].Style.ForeColor = Color.Red;
+
+                    dataGridViewMatica[i, 0].Style.BackColor = Color.DeepPink;
+                    dataGridViewMatica[0, i].Style.BackColor = Color.DeepPink;
+                    dataGridViewMatica[i, 0].Style.ForeColor = Color.White;
+                    dataGridViewMatica[0, i].Style.ForeColor = Color.White;
+
+                    if (textBoxUzlyNaKritickejCeste.Text != "")
+                    {
+                        textBoxUzlyNaKritickejCeste.Text += ", ";
+
+                    }
+                    textBoxUzlyNaKritickejCeste.Text += dataGridViewMatica[i, 0].Value.ToString();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Spustenie vsetkych vypoctov
+        /// </summary>
+        private void Vypocet()
+        {
+            textBoxUzlyNaKritickejCeste.Text = "";
+
+            vypocetTM();
+            vypocetTP();
+            vyznacenieKritickejCesty();
+            dataGridViewMatica.ClearSelection();
+        }
+        #endregion
+
+
+        #region Testovacie data
+
+        /// <summary>
+        /// Naplnenie matice testovacimi datami
+        /// </summary>
         private void NaplnTestovacieData()
         {
             dataGridViewMatica[2, 1].Value = "8";
@@ -248,7 +301,6 @@ namespace incidencna_matica
             dataGridViewMatica[7, 6].Value = "8";
             dataGridViewMatica[8, 6].Value = "20";
             dataGridViewMatica[9, 6].Value = "24";
-            //dataGridViewMatica[9, 7].Value = "23";//--------------
             dataGridViewMatica[8, 7].Value = "0";
             dataGridViewMatica[9, 8].Value = "0";
             dataGridViewMatica[10, 9].Value = "4";
@@ -256,12 +308,9 @@ namespace incidencna_matica
             dataGridViewMatica[12, 11].Value = "4";
         }
 
-        private void Vypocet()
-        {
-            vypocetTM();
-            vypocetTP();
-        }
-
+        /// <summary>
+        /// Spustenie vypoctu testovacimi datami
+        /// </summary>
         private void buttonLoadTestingDataClick()
         {
             //----------------------------
@@ -273,10 +322,11 @@ namespace incidencna_matica
             Vypocet();
         }
 
-        private void dataGridViewMatica_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            
-            //Vypocet();
-        }
+
+        #endregion
+
+
+
+
     }
 }

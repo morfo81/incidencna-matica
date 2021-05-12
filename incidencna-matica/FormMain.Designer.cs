@@ -36,6 +36,8 @@ namespace incidencna_matica
             this.numericUpDownPocetUzlov = new System.Windows.Forms.NumericUpDown();
             this.buttonLoadTestingData = new System.Windows.Forms.Button();
             this.buttonVypocitaj = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxUzlyNaKritickejCeste = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMatica)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPocetUzlov)).BeginInit();
             this.SuspendLayout();
@@ -46,6 +48,9 @@ namespace incidencna_matica
             this.dataGridViewMatica.AllowUserToDeleteRows = false;
             this.dataGridViewMatica.AllowUserToResizeColumns = false;
             this.dataGridViewMatica.AllowUserToResizeRows = false;
+            this.dataGridViewMatica.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewMatica.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dataGridViewMatica.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridViewMatica.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
@@ -65,9 +70,8 @@ namespace incidencna_matica
             this.dataGridViewMatica.Location = new System.Drawing.Point(21, 41);
             this.dataGridViewMatica.Name = "dataGridViewMatica";
             this.dataGridViewMatica.RowHeadersVisible = false;
-            this.dataGridViewMatica.Size = new System.Drawing.Size(951, 508);
+            this.dataGridViewMatica.Size = new System.Drawing.Size(676, 452);
             this.dataGridViewMatica.TabIndex = 0;
-            this.dataGridViewMatica.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMatica_CellValueChanged);
             // 
             // buttonPocetUzlov
             // 
@@ -112,7 +116,8 @@ namespace incidencna_matica
             // 
             // buttonLoadTestingData
             // 
-            this.buttonLoadTestingData.Location = new System.Drawing.Point(777, 12);
+            this.buttonLoadTestingData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonLoadTestingData.Location = new System.Drawing.Point(502, 12);
             this.buttonLoadTestingData.Name = "buttonLoadTestingData";
             this.buttonLoadTestingData.Size = new System.Drawing.Size(195, 23);
             this.buttonLoadTestingData.TabIndex = 4;
@@ -122,7 +127,7 @@ namespace incidencna_matica
             // 
             // buttonVypocitaj
             // 
-            this.buttonVypocitaj.Location = new System.Drawing.Point(297, 12);
+            this.buttonVypocitaj.Location = new System.Drawing.Point(351, 12);
             this.buttonVypocitaj.Name = "buttonVypocitaj";
             this.buttonVypocitaj.Size = new System.Drawing.Size(75, 23);
             this.buttonVypocitaj.TabIndex = 5;
@@ -130,11 +135,33 @@ namespace incidencna_matica
             this.buttonVypocitaj.UseVisualStyleBackColor = true;
             this.buttonVypocitaj.Click += new System.EventHandler(this.buttonVypocitaj_Click);
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(18, 502);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(113, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Uzly na kritickej ceste:";
+            // 
+            // textBoxUzlyNaKritickejCeste
+            // 
+            this.textBoxUzlyNaKritickejCeste.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUzlyNaKritickejCeste.Location = new System.Drawing.Point(137, 499);
+            this.textBoxUzlyNaKritickejCeste.Name = "textBoxUzlyNaKritickejCeste";
+            this.textBoxUzlyNaKritickejCeste.ReadOnly = true;
+            this.textBoxUzlyNaKritickejCeste.Size = new System.Drawing.Size(560, 20);
+            this.textBoxUzlyNaKritickejCeste.TabIndex = 7;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 561);
+            this.ClientSize = new System.Drawing.Size(709, 528);
+            this.Controls.Add(this.textBoxUzlyNaKritickejCeste);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonVypocitaj);
             this.Controls.Add(this.buttonLoadTestingData);
             this.Controls.Add(this.numericUpDownPocetUzlov);
@@ -142,7 +169,7 @@ namespace incidencna_matica
             this.Controls.Add(this.buttonPocetUzlov);
             this.Controls.Add(this.dataGridViewMatica);
             this.Name = "FormMain";
-            this.Text = "Main";
+            this.Text = "Incidenčná matica";
             this.Load += new System.EventHandler(this.FormMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMatica)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPocetUzlov)).EndInit();
@@ -159,6 +186,8 @@ namespace incidencna_matica
         private System.Windows.Forms.NumericUpDown numericUpDownPocetUzlov;
         private System.Windows.Forms.Button buttonLoadTestingData;
         private System.Windows.Forms.Button buttonVypocitaj;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxUzlyNaKritickejCeste;
     }
 }
 
